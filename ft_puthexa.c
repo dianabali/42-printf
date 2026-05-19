@@ -1,6 +1,19 @@
-#include "ft_printf.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_puthexa.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dbali <dbali@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/05/19 15:18:03 by dbali             #+#    #+#             */
+/*   Updated: 2026/05/19 15:26:09 by dbali            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-int	ft_puthex(unsigned long n, int uppercase)
+#include "ft_printf.h"
+#include <stdio.h>
+
+int	ft_puthexa(unsigned long n, int uppercase)
 {
 	char	*base_lower;
 	char	*base_upper;
@@ -15,7 +28,13 @@ int	ft_puthex(unsigned long n, int uppercase)
 		base = base_lower;
 	count = 0;
 	if (n >= 16)
-		count += ft_puthex(n / 16, uppercase);
+		count += ft_puthexa(n / 16, uppercase);
 	count += ft_putchar(base[n % 16]);
 	return (count);
+}
+
+int	main(void)
+{
+	printf("%x\n", 10);
+	printf("%X\n", 10);
 }
