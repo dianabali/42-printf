@@ -26,7 +26,7 @@ int	ft_putnbr(int n)
 		nb = -nb;
 	}
 	if (nb >= 10)
-		count += ft_putnbr((int)(nb / 10));
+		count += ft_putnbr(nb / 10);
 	count += ft_putchar((char)(nb % 10 + '0'));
 	return (count);
 }
