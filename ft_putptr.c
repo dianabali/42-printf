@@ -10,28 +10,43 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+/*
+	ft_putptr
+	Prints a pointer's memory address in hexadecimal.
+	Parameters:
+		- ptr: The pointer whose address will be printed.
+*/
+
 #include "ft_printf.h"
 #include <stdio.h>
 
 int	ft_putptr(void *ptr)
 {
-	int	count;
-	unsigned long address;
+	int	count; // Total number of characters printed
+	unsigned long address; // Stores the pointer address
 
-	if (!ptr)
+	if (!ptr) // If the pointer is NULL, the address is 0
 		return (ft_putstr("(null)"));
 	count = 0;
-	address = (unsigned long)ptr;
-	count += ft_putstr("0x");
-	count += ft_puthexa(address, 0);
+	address = (unsigned long)ptr; // Cast to get the address as a number
+	count += ft_putstr("0x"); // Print the '0x' prefix
+	count += ft_puthexa(address, 0); // Print the address in lowercase hexadecimal
 	return (count);
 }
 
 int	main(void)
 {
-	int num = 42;
-    int *ptr = &num;
+	int		num;
+	int		*ptr;
 
-    printf("address of num:   %p\n", (void *)&num);
-    printf("value of ptr:   %p\n", (void *)ptr);
+	num = 42;
+	ptr = &num;
+
+	ft_putstr("address of num: ");
+	ft_putptr((void *)&num);
+	ft_putchar('\n');
+
+	ft_putstr("value of ptr: ");
+	ft_putptr((void *)ptr);
+	ft_putchar('\n');
 }
