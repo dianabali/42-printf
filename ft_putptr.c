@@ -36,17 +36,19 @@ int	ft_putptr(void *ptr)
 
 int	main(void)
 {
-	int		num;
-	int		*ptr;
+	int num = 42;
+    int *ptr = &num;
 
-	num = 42;
-	ptr = &num;
+	printf("%s\n", "my func:");
+	ft_putptr(ptr); // 0x7ffcdb46edac
+	printf("%c", '\n');
+	ft_putptr(&num); // 0x7ffcdb46edac
+	printf("%c", '\n');
+	printf("\n%d", ft_putptr(ptr)); // 0x7ffcdb46edac and 14
 
-	ft_putstr("address of num: ");
-	ft_putptr((void *)&num);
-	ft_putchar('\n');
-
-	ft_putstr("value of ptr: ");
-	ft_putptr((void *)ptr);
-	ft_putchar('\n');
+	printf("\n\n%s\n", "real func:");
+	// Casting to void * because printf expects a void pointer for %p
+    printf("%p\n", (void *)&num); // 0x7ffcdb46edac
+    printf("%p\n", (void *)ptr); // 0x7ffcdb46edac
+	printf("\n%d\n", printf("%p", (void *)ptr)); // 0x7ffcdb46edac and 14
 }
