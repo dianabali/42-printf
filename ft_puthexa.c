@@ -43,7 +43,23 @@ int	ft_puthexa(unsigned long n, int uppercase)
 
 int	main(void)
 {
-	ft_puthexa(10, 0);
-	ft_putchar('\n');
-	ft_puthexa(10, 1);
+	printf("%s\n", "my func:");
+	ft_puthexa(10, 0); // a
+	ft_puthexa(10, 1); // A
+
+	printf("%c", '\n');
+
+	printf("\n%d", ft_puthexa(10, 0)); // a and 1
+
+
+	printf("%c", '\n');
+
+
+	printf("%s\n", "real func:");
+	printf("%x", 10); // a
+	printf("%X", 10); // A
+
+	printf("%c", '\n');
+
+	printf("\n%d", printf("%x", 10)); // a and 1
 }
