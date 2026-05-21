@@ -31,7 +31,18 @@ int	ft_putnbr(int n)
 	return (count);
 }
 
-/* int	main(void)
+int	main(void)
 {
-	printf("%d", ft_putnbr(444));
-} */
+	printf("%s\n", "my func:");
+	ft_putnbr(404); // 404
+	printf("%c", '\n');
+	printf("\n%d", ft_putnbr(404)); // 404 and 3
+	
+
+	printf("%c", '\n');
+
+	printf("\n%s\n", "real func:");
+	printf("%d", 404); // 404
+	printf("%c", '\n');
+	printf("\n%d", printf("%d", 404)); // 404 and 3
+}
