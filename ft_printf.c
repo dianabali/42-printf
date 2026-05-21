@@ -30,7 +30,7 @@ int	ft_handle_conversion(char specifier, va_list args)
 
 	// For ints and signed ints
 	// va_arg fetches the next arg as int
-	else if (specifier == 'd' || spec == 'i')
+	else if (specifier == 'd' || specifier == 'i')
 		return (ft_putnbr(va_arg(args, int)));
 
 	// For unsigned ints
@@ -101,33 +101,33 @@ int	main(void)
 	str = "hello";
 	ptr = &num;
 
-	ft_printf("char:          %c\n", 'A');
+	ft_printf("char:          %c\n", 'A'); // A
 
-	ft_printf("string:        %s\n", str);
+	ft_printf("string:        %s\n", str); // hello
 
-	ft_printf("null string:   %s\n", NULL);
+	ft_printf("null string:   %s\n", NULL); // Seg fault if the string is NULL
 
-	ft_printf("pointer:       %p\n", ptr);
+	ft_printf("pointer:       %p\n", ptr); // 0x7ffc3c0c74ec
 
-	ft_printf("null pointer:  %p\n", NULL);
+	ft_printf("null pointer:  %p\n", NULL); // (null)
 
-	ft_printf("decimal:       %d\n", num);
+	ft_printf("decimal:       %d\n", num); // 42
 
-	ft_printf("negative:      %d\n", -42);
+	ft_printf("negative:      %d\n", -42); // -42
 
-	ft_printf("integer:       %i\n", num);
+	ft_printf("integer:       %i\n", num); // 42
 
-	ft_printf("unsigned:      %u\n", 4294967295u);
+	ft_printf("unsigned:      %u\n", 4294967295u); // 4294967295
 
-	ft_printf("unsigned -1:   %u\n", -1);
+	ft_printf("unsigned -1:   %u\n", -1); // 4294967295
 
-	ft_printf("hex lower:     %x\n", 255);
+	ft_printf("hex lower:     %x\n", 15); // f
 
-	ft_printf("hex upper:     %X\n", 255);
+	ft_printf("hex upper:     %X\n", 15); // F
 
-	ft_printf("percent:       100%%\n");
+	ft_printf("percent:       100%%\n"); // 100%
 
-	ft_printf("\nmixed: %s scored %x in libft\n", "oscar", 64);
+	ft_printf("\nmixed: %s scored %x in libft\n", "oscar", 64); // mixed: oscar scored 100 in libft
 
-	ft_printf("\nreturn value:  %d\n", ft_printf("hello\n"));
+	ft_printf("\nreturn value:  %d\n", ft_printf("\nhello")); // hello + 6
 }
