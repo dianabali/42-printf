@@ -10,6 +10,13 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+/*
+	ft_putchar
+	Prints a character.
+	Parameters:
+		- c: The character to be printed.
+*/
+
 #include "ft_printf.h"
 // #include <stdio.h>
 
@@ -19,7 +26,13 @@ int	ft_putchar(char c)
 	return (1);
 }
 
-/* int	main(void)
+int	main(void)
 {
-	printf("%c", 'A');
-} */
+	printf("%s\n", "my func:");
+	printf("%d", ft_putchar('A')); // Prints A and 1 (nr of characters)
+
+	printf("%c", '\n');
+
+	printf("\n%s\n", "real func:");
+	printf("%d", printf("%c", 'A')); // Prints A and 1
+}
