@@ -78,7 +78,7 @@ int	ft_printf(const char *format, ...)
 	count = 0;
 	while (format[i]) // Loop through the format string
 	{
-		if (format[i] == '%' && format[i + 1])
+		if (format[i] == '%' && format[i + 1]) // Current char is a format specifier and ensure % is not the last char
 		{
 			i++; // Move past %
 			count += ft_handle_conversion(format[i], args); // Handle the specifier and add printed chars to count
