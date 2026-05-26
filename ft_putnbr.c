@@ -15,11 +15,11 @@
 
 int	ft_putnbr(int n)
 {
-	int	count;
-	int	nb;
+	int		count;
+	long	nb;
 
 	count = 0;
-	nb = (long)n;
+	nb = n;
 	if (nb < 0)
 	{
 		count += ft_putchar('-');
