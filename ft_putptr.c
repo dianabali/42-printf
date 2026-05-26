@@ -26,7 +26,7 @@ int	ft_putptr(void *ptr)
 	unsigned long address; // Stores the pointer address
 
 	if (!ptr) // If the pointer is NULL, the address is 0
-		return (ft_putstr("(null)"));
+		return (ft_putstr("(nil)"));
 	count = 0;
 	address = (unsigned long)ptr; // Cast to get the address as a number
 	count += ft_putstr("0x"); // Print the '0x' prefix
