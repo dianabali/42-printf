@@ -11,40 +11,57 @@
 		- 0 if the specifier is unknown.
 */
 
+/*
+	Example:
+	
+	if (specifier == 'c')
+		return (ft_putchar((char)va_arg(args, int)));
+
+	- va_args - holds the args that you pass to your function ('A').
+	- va_args takes the char as int (default argument promotion / type conversion in variadic functions) and returns it as char.
+*/
+
 int	ft_handle_conversion(char specifier, va_list args)
 {
 	// For chars
 	// va_arg fetches the next arg as int then cast back to char
+	// int - chars are stored as int (ASCII value) in va_arg
 	if (specifier == 'c')
 		return (ft_putchar((char)va_arg(args, int)));
 
 	// For strings
 	// va_arg fetches the next arg as a char pointer
+	// char - expects a string
 	else if (specifier == 's')
 		return (ft_putstr(va_arg(args, char *)));
 
 	// For pointers
 	// va_arg fetches the next arg as a void pointer
+	// void - to print a memory address of an unknown thing
 	else if (specifier == 'p')
 		return (ft_putptr(va_arg(args, void *)));
 
 	// For ints and signed ints
 	// va_arg fetches the next arg as int
+	// int - to print signed decimal numbers
 	else if (specifier == 'd' || specifier == 'i')
 		return (ft_putnbr(va_arg(args, int)));
 
 	// For unsigned ints
 	// va_arg fetches the next arg as unsigned int
+	// unsigned int - expects an unsigned int
 	else if (specifier == 'u')
 		return (ft_putunsigned(va_arg(args, unsigned int)));
 
 	// For lowecase hexadecimal
 	// 0 means lowercase
+	// unsigned int - hexadecimal interprets bits as unsigned values
 	else if (specifier == 'x')
 		return (ft_puthexa(va_arg(args, unsigned int), 0));
 
 	// For uppercase hexadecimal
 	// 1 means uppercase
+	// unsigned int - hexadecimal interprets bits as unsigned values
 	else if (specifier == 'X')
 		return (ft_puthexa(va_arg(args, unsigned int), 1));
 
