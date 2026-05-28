@@ -1,7 +1,7 @@
 # Printf
 
 ### Description
-`Printf` involves recreating the standard C library function `printf()`. The goal is to implement a custom version of `printf()` without using the original implementation in order to bettwe understand variadic functions and formatted output.
+`Printf` involves recreating the standard C library function `printf()`. The goal is to implement a custom version of `printf()` without using the original implementation in order to better understand variadic functions and formatted output.
 
 **General `printf` format syntax:**
 ```
@@ -12,7 +12,7 @@
 - `%c` - print a character.
 - `%s` - print a string.
 - `%p` - print a pointer address.
-- `%d` / `%i` - print aa decimal number.
+- `%d` / `%i` - print a decimal number.
 - `%u` - print an unsigned decimal number.
 - `%x` - print a hexadecimal number in lowercase.
 - `%X` - print a hexadecimal number in uppercase.
@@ -20,8 +20,8 @@
 
 ### Flags
 - `-` - left align output.
-- `+` - always print sign.
-- `(space)` - add leading space for positive numbers.
+- `+` - always print the sign of the number.
+- `(space)` - add leading spaces for positive numbers.
 - `#` - used with these specifiers `%o`, `%x`, and `%X`, and the value is proceeded with `0`, `0x`, or `0X` respectively.
 - `0` - pad with zeros.
 - `width` - minimum field width.
@@ -30,7 +30,7 @@
 ## Instructions
 1. Clone this repository:
 ```
-git clone <repo-link>
+git clone https://github.com/dianabali/42-printf
 ```
 2. Run `make` or `make libftprintf.a` to compile the library `libftprintf.a`.
 ```
