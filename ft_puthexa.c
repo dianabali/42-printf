@@ -45,6 +45,7 @@ int	main(void)
 {
 	printf("%s\n", "my func:");
 	ft_puthexa(10, 0); // a
+	printf("%c", '\n');
 	ft_puthexa(10, 1); // A
 
 	printf("%c", '\n');
