@@ -1,4 +1,5 @@
 #include "ft_printf.h"
+#include <stdio.h>
 
 /*
 	ft_handle_conversion
@@ -118,19 +119,40 @@ int	main(void)
 	str = "hello";
 	ptr = &num;
 
-	ft_printf("char:          %c\n", 'A'); // A
-	ft_printf("string:        %s\n", str); // hello
-	ft_printf("null string:   %s\n", NULL); // Seg fault if the string is NULL
-	ft_printf("pointer:       %p\n", ptr); // 0x7ffc3c0c74ec
-	ft_printf("null pointer:  %p\n", NULL); // (null)
-	ft_printf("decimal:       %d\n", num); // 42
-	ft_printf("negative:      %d\n", -42); // -42
-	ft_printf("integer:       %i\n", num); // 42
-	ft_printf("unsigned:      %u\n", 4294967295u); // 4294967295
-	ft_printf("unsigned -1:   %u\n", -1); // 4294967295
-	ft_printf("hex lower:     %x\n", 15); // f
-	ft_printf("hex upper:     %X\n", 15); // F
-	ft_printf("percent:       100%%\n"); // 100%
-	ft_printf("\n%s scored %x in libft\n", "oscar", 64); // mixed: oscar scored 100 in libft
-	ft_printf("\nreturn value:  %d\n", ft_printf("\nhello")); // hello + 6
+	printf("MY FUNC:\n");
+
+	ft_printf("char:          %c\n", 'A');
+	ft_printf("string:        %s\n", str);
+	// ft_printf("null string:   %s\n", NULL);
+	ft_printf("pointer:       %p\n", ptr);
+	ft_printf("null pointer:  %p\n", NULL);
+	ft_printf("decimal:       %d\n", num);
+	ft_printf("negative:      %d\n", -42);
+	ft_printf("integer:       %i\n", num);
+	ft_printf("unsigned:      %u\n", 4294967295u);
+	ft_printf("unsigned -1:   %u\n", -1);
+	ft_printf("hex lower:     %x\n", 15);
+	ft_printf("hex upper:     %X\n", 15);
+	ft_printf("percent:       100%%\n");
+	ft_printf("\n%s scored %x in libft\n", "oscar", 256);
+	ft_printf("\nlen of hello:  %d\n", ft_printf("\nhello"));
+
+	printf("\nREAL FUNC:\n");
+
+	printf("char:          %c\n", 'A');
+	printf("string:        %s\n", str);
+	// printf("null string:   %s\n", NULL);
+	printf("pointer:       %p\n", ptr);
+	printf("null pointer:  %p\n", NULL);
+	printf("decimal:       %d\n", num);
+	printf("negative:      %d\n", -42);
+	printf("integer:       %i\n", num);
+	printf("unsigned:      %u\n", 4294967295u);
+	printf("unsigned -1:   %u\n", -1);
+	printf("hex lower:     %x\n", 15);
+	printf("hex upper:     %X\n", 15);
+	printf("percent:       100%%\n");
+	printf("\n%s scored %x in libft\n", "oscar", 256);
+	printf("\nlen of hello:  %d\n", ft_printf("\nhello"));
 }
+
