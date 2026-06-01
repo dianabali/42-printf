@@ -10,6 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+// %d - for decimal
+// %i - for decimal, hexadecimal, and octal
+
 #include "ft_printf.h"
 #include <stdio.h>
 
