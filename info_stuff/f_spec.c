@@ -81,94 +81,6 @@ int	ft_putfloat(double n, int precision)
 		count += ft_putnbr(integer);
 		return (count);
 	}
-#include "ft_printf.h"
-#include <stdio.h>
-
-static long	ft_pow10(int exp)
-{
-	long	result;
-
-	result = 1;
-	while (exp--)
-		result *= 10;
-	return (result);
-}
-
-int	ft_putfloat(double n, int precision)
-{
-	int		count;
-	long	integer;
-	long	decimal;
-	double	frac;
-	int		digits;
-	long	temp;
-
-	count = 0;
-	if (precision < 0)
-		precision = 6;
-
-	if (n < 0)
-	{
-		count += ft_putchar('-');
-		n = -n;
-	}
-
-	integer = (long)n;
-	if (precision == 0)
-	{
-		count += ft_putnbr(integer);
-		return (count);
-	}
-
-	frac = n - (double)integer;
-	decimal = (long)(frac * ft_pow10(precision) + 0.5);
-	if (decimal >= ft_pow10(precision))
-	{
-		integer++;
-		decimal -= ft_pow10(precision);
-	}
-
-	count += ft_putnbr(integer);
-	if (precision > 0)
-	{
-		count += ft_putchar('.');
-		digits = precision;
-		temp = decimal;
-		while (--digits > 0 && temp < ft_pow10(digits))
-			count += ft_putchar('0');
-		count += ft_putnbr(decimal);
-	}
-	return (count);
-}
-
-int	main(void)
-{
-	printf("positive number:  3.141590\n"); 
-	ft_putfloat(3.14159, 6); 
-	printf("\n\n");
-
-	printf("negative number:  -0.50\n");
-	ft_putfloat(-0.5, 2); 
-	printf("\n\n");
-
-	printf("leading zeros:  0.0010\n"); 
-	ft_putfloat(0.001, 4); 
-	printf("\n\n");
-
-	printf("rounding with precision 2:  10.00\n");
-	ft_putfloat(9.999, 2); 
-	printf("\n\n");
-
-	printf("zero precision:  3\n");
-	ft_putfloat(3.7, 0); 
-	printf("\n\n");
-
-	printf("default precision:  1.500000\n");
-	ft_putfloat(1.5, -1); 
-	printf("\n\n");
-
-	return (0);
-}
 
 	/*
 		Extract the fractional part.
@@ -210,7 +122,6 @@ int	main(void)
 
 	/*
 		Print integer portion.
-		Example: 3
 	*/
 	count += ft_putnbr(integer);
 
