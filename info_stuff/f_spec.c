@@ -30,12 +30,12 @@ Prints a floating-point number with a specified precision.
 */
 int	ft_putfloat(double n, int precision)
 {
-	int		count;    // Counts printed characters
-	long	integer;  // Integer part of n
-	long	decimal;  // Decimal digits after scaling
-	double	frac;     // Fractional part of n
-	int		digits;   // Used for leading-zero padding
-	long	temp;      // Temporary copy of decimal
+	int		count; // Counts printed characters
+	long	integer; // Integer part of n (3 in 3.14)
+	long	decimal; // Decimal digits after scaling
+	double	frac; // Fractional part of n (0.14 in 3.14)
+	int		digits; // Used for leading-zero padding
+	long	temp; // Temporary copy of decimal
 
 	count = 0;
 
@@ -69,12 +69,10 @@ int	ft_putfloat(double n, int precision)
 	integer = (long)n;
 
 	/*
-		Special case:
-		No decimal places requested.
+		Special case: No decimal places requested.
 			Example:
 			ft_putfloat(3.7, 0)
-			Output:
-			3
+			Output: 3
 	*/
 	if (precision == 0)
 	{
@@ -92,10 +90,11 @@ int	ft_putfloat(double n, int precision)
 	frac = n - (double)integer;
 
 	/*
-		Convert fractional part into an integer.
+		Convert fractional part into an integer for ft_putnbr()
 			Example:
 			frac = 0.14159
 			precision = 4
+			10^4 = 10000
 			0.14159 * 10000 = 1415.9
 			Add 0.5 for rounding:
 			1415.9 + 0.5 = 1416.4
@@ -120,24 +119,16 @@ int	ft_putfloat(double n, int precision)
 		decimal -= ft_pow10(precision);
 	}
 
-	/*
-		Print integer portion.
-	*/
+	// Print integer portion
 	count += ft_putnbr(integer);
 
-	/*
-		Print decimal point and decimal digits.
-	*/
+	// Print decimal point and decimal digits.
 	if (precision > 0)
 	{
-		/*
-			Print '.'
-		*/
+		// Print '.'
 		count += ft_putchar('.');
 
-		/*
-			Used to determine how many leading zeros must be printed.
-		*/
+		// Used to determine how many leading zeros must be printed.
 		digits = precision;
 		temp = decimal;
 
@@ -154,15 +145,12 @@ int	ft_putfloat(double n, int precision)
 
 		/*
 			Print decimal digits.
-				Example:
-				decimal = 141590
+				Example: decimal = 141590
 		*/
 		count += ft_putnbr(decimal);
 	}
 
-	/*
-		Return total characters printed.
-	*/
+	// Return total characters printed.
 	return (count);
 }
 
