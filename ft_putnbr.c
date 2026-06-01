@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+// With scanf()
 // %d - for decimal
 // %i - for decimal, hexadecimal, and octal
 
@@ -49,3 +50,21 @@ int	main(void)
 	printf("%c", '\n');
 	printf("\n%d", printf("%d", 404)); // 404 and 3
 }
+
+/* int main()
+{
+    int a, b, c;
+
+    printf("Enter value of a in decimal format:");
+    scanf("%d", &a);
+
+    printf("Enter value of b in octal format: ");
+    scanf("%i", &b);
+
+    printf("Enter value of c in hexadecimal format: ");
+    scanf("%i", &c);
+
+    printf("a = %i, b = %i, c = %i", a, b, c);
+
+    return 0;
+} */
