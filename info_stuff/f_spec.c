@@ -1,25 +1,7 @@
-#include "ft_putfloat.h"
+#include "ft_printf.h"
+#include <stdio.h>
 
-/* writes a single character to stdout, returns 1 */
-static int	ft_putchar(char c)
-{
-	write(1, &c, 1);
-	return (1);
-}
-
-/* recursively prints a positive long integer, returns number of chars written */
-static int	ft_putnbr(long n)
-{
-	int	count; /* tracks number of characters written */
-
-	count = 0;
-	if (n >= 10)
-		count += ft_putnbr(n / 10); /* print all digits except the last */
-	count += ft_putchar((char)(n % 10 + '0')); /* print last digit */
-	return (count);
-}
-
-/* returns 10 raised to the power of exp (e.g. ft_pow10(3) → 1000) */
+// returns 10 raised to the power of exp (e.g. ft_pow10(3) → 1000)
 static long	ft_pow10(int exp)
 {
 	long	result; /* accumulates the power of 10 */
