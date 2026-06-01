@@ -114,16 +114,18 @@ int	main(void)
 	int		num;
 	char	*str;
 	void	*ptr;
+	char	*s;
 
 	num = 42;
 	str = "hello";
 	ptr = &num;
+	s = NULL;
 
 	printf("MY FUNC:\n");
 
 	ft_printf("char:          %c\n", 'A');
 	ft_printf("string:        %s\n", str);
-	// ft_printf("null string:   %s\n", NULL);
+	ft_printf("null string:   %s\n", s);
 	ft_printf("pointer:       %p\n", ptr);
 	ft_printf("null pointer:  %p\n", NULL);
 	ft_printf("decimal:       %d\n", num);
@@ -141,7 +143,7 @@ int	main(void)
 
 	printf("char:          %c\n", 'A');
 	printf("string:        %s\n", str);
-	// printf("null string:   %s\n", NULL);
+	printf("null string:   %s\n", s);
 	printf("pointer:       %p\n", ptr);
 	printf("null pointer:  %p\n", NULL);
 	printf("decimal:       %d\n", num);
@@ -155,4 +157,3 @@ int	main(void)
 	printf("\n%s scored %x in libft\n", "oscar", 256);
 	printf("\nlen of hello:  %d\n", ft_printf("\nhello"));
 }
-
