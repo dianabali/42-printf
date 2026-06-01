@@ -1,10 +1,92 @@
 #include "ft_printf.h"
 #include <stdio.h>
 
-// returns 10 raised to the power of exp (e.g. ft_pow10(3) → 1000)
+/*
+	Returns 10 raised to the power exp.
+
+	Examples:
+	ft_pow10(0) = 1
+	ft_pow10(1) = 10
+	ft_pow10(2) = 100
+	ft_pow10(3) = 1000
+*/
 static long	ft_pow10(int exp)
 {
-	long	result; /* accumulates the power of 10 */
+	long	result;
+
+	result = 1; // Start with 10^0 = 1
+
+	// Multiply by 10 exp times
+	while (exp--)
+		result *= 10;
+	return (result);
+}
+
+/*
+Prints a floating-point number with a specified precision.
+	Parameters:
+		n - Number to print
+		precision - Number of digits after the decimal point
+*/
+int	ft_putfloat(double n, int precision)
+{
+	int		count;    // Counts printed characters
+	long	integer;  // Integer part of n
+	long	decimal;  // Decimal digits after scaling
+	double	frac;     // Fractional part of n
+	int		digits;   // Used for leading-zero padding
+	long	temp;      // Temporary copy of decimal
+
+	count = 0;
+
+	/*
+		If precision is negative, use the default precision of 6.
+			Example:
+			ft_putfloat(1.5, -1)
+			prints: 1.500000
+	*/
+	if (precision < 0)
+		precision = 6;
+
+	/*
+		Handle negative numbers.
+			Example:
+			n = -0.5
+			Print '-', then make n positive so the rest of the code can work with positive values.
+	*/
+	if (n < 0)
+	{
+		count += ft_putchar('-');
+		n = -n;
+	}
+
+	/*
+		Extract the integer part.
+			Example:
+			3.14159 -> 3
+			Casting to long removes everything after the decimal point.
+	*/
+	integer = (long)n;
+
+	/*
+		Special case:
+		No decimal places requested.
+			Example:
+			ft_putfloat(3.7, 0)
+			Output:
+			3
+	*/
+	if (precision == 0)
+	{
+		count += ft_putnbr(integer);
+		return (count);
+	}
+#include "ft_printf.h"
+#include <stdio.h>
+
+static long	ft_pow10(int exp)
+{
+	long	result;
 
 	result = 1;
 	while (exp--)
@@ -12,54 +94,192 @@ static long	ft_pow10(int exp)
 	return (result);
 }
 
-/*
-** ft_putfloat - prints a positive double with a given precision
-**
-** params:
-**   n         - the positive double to print
-**   precision - number of decimal places (pass -1 for default of 6)
-**
-** examples:
-**   ft_putfloat(3.14159, 6)  → "3.141590"
-**   ft_putfloat(0.001, 4)    → "0.0010"
-**   ft_putfloat(9.999, 2)    → "10.00"  (rounding carry)
-*/
 int	ft_putfloat(double n, int precision)
 {
-	int		count;     /* total characters written */
-	long	integer;   /* integer part of n (e.g. 3 from 3.14) */
-	long	decimal;   /* decimal part shifted to integer (e.g. 14 from 3.14 at precision 2) */
-	double	frac;      /* fractional part of n (e.g. 0.14 from 3.14) */
-	int		digits;    /* used to count leading zeros in decimal part */
-	long	tmp;       /* copy of decimal used in leading zero check */
+	int		count;
+	long	integer;
+	long	decimal;
+	double	frac;
+	int		digits;
+	long	temp;
 
 	count = 0;
 	if (precision < 0)
-		precision = 6; /* default precision matches printf behavior */
+		precision = 6;
+
 	if (n < 0)
 	{
-		count += ft_putchar('-'); /* print minus sign for negative values */
-		n = -n;                  /* work with positive value from here on */
+		count += ft_putchar('-');
+		n = -n;
 	}
-	integer = (long)n;                              /* strip fractional part */
-	frac = n - (double)integer;                     /* isolate fractional part */
-	decimal = (long)(frac * ft_pow10(precision) + 0.5); /* shift and round */
-	/* if rounding pushed decimal to next power, carry into integer */
+
+	integer = (long)n;
+	if (precision == 0)
+	{
+		count += ft_putnbr(integer);
+		return (count);
+	}
+
+	frac = n - (double)integer;
+	decimal = (long)(frac * ft_pow10(precision) + 0.5);
 	if (decimal >= ft_pow10(precision))
 	{
 		integer++;
 		decimal -= ft_pow10(precision);
 	}
-	count += ft_putnbr(integer); /* print integer part */
+
+	count += ft_putnbr(integer);
 	if (precision > 0)
 	{
-		count += ft_putchar('.'); /* print decimal point */
+		count += ft_putchar('.');
 		digits = precision;
-		tmp = decimal;
-		/* print leading zeros (e.g. 0.001 needs two leading zeros) */
-		while (--digits > 0 && tmp < ft_pow10(digits))
+		temp = decimal;
+		while (--digits > 0 && temp < ft_pow10(digits))
 			count += ft_putchar('0');
-		count += ft_putnbr(decimal); /* print decimal digits */
+		count += ft_putnbr(decimal);
 	}
 	return (count);
+}
+
+int	main(void)
+{
+	printf("positive number:  3.141590\n"); 
+	ft_putfloat(3.14159, 6); 
+	printf("\n\n");
+
+	printf("negative number:  -0.50\n");
+	ft_putfloat(-0.5, 2); 
+	printf("\n\n");
+
+	printf("leading zeros:  0.0010\n"); 
+	ft_putfloat(0.001, 4); 
+	printf("\n\n");
+
+	printf("rounding with precision 2:  10.00\n");
+	ft_putfloat(9.999, 2); 
+	printf("\n\n");
+
+	printf("zero precision:  3\n");
+	ft_putfloat(3.7, 0); 
+	printf("\n\n");
+
+	printf("default precision:  1.500000\n");
+	ft_putfloat(1.5, -1); 
+	printf("\n\n");
+
+	return (0);
+}
+
+	/*
+		Extract the fractional part.
+			Example:
+			n = 3.14159
+			integer = 3
+			frac = 0.14159
+	*/
+	frac = n - (double)integer;
+
+	/*
+		Convert fractional part into an integer.
+			Example:
+			frac = 0.14159
+			precision = 4
+			0.14159 * 10000 = 1415.9
+			Add 0.5 for rounding:
+			1415.9 + 0.5 = 1416.4
+			Cast to long:
+			decimal = 1416
+	*/
+	decimal = (long)(frac * ft_pow10(precision) + 0.5);
+
+	/*
+		Handle rounding overflow.
+			Example:
+			9.999 with precision 2 decimal becomes 100
+			But valid decimal range for precision 2 is 00-99.
+			So:
+				integer becomes 10
+				decimal becomes 0
+			Result: 10.00
+	*/
+	if (decimal >= ft_pow10(precision))
+	{
+		integer++;
+		decimal -= ft_pow10(precision);
+	}
+
+	/*
+		Print integer portion.
+		Example: 3
+	*/
+	count += ft_putnbr(integer);
+
+	/*
+		Print decimal point and decimal digits.
+	*/
+	if (precision > 0)
+	{
+		/*
+			Print '.'
+		*/
+		count += ft_putchar('.');
+
+		/*
+			Used to determine how many leading zeros must be printed.
+		*/
+		digits = precision;
+		temp = decimal;
+
+		/*
+			Add leading zeros.
+				Example:
+				decimal = 10
+				precision = 4
+				Need: 0010
+				Not: 10
+		*/
+		while (--digits > 0 && temp < ft_pow10(digits))
+			count += ft_putchar('0');
+
+		/*
+			Print decimal digits.
+				Example:
+				decimal = 141590
+		*/
+		count += ft_putnbr(decimal);
+	}
+
+	/*
+		Return total characters printed.
+	*/
+	return (count);
+}
+
+int	main(void)
+{
+	printf("positive number:  3.141590\n");
+	ft_putfloat(3.14159, 6);
+	printf("\n\n");
+
+	printf("negative number:  -0.50\n");
+	ft_putfloat(-0.5, 2);
+	printf("\n\n");
+
+	printf("leading zeros:  0.0010\n");
+	ft_putfloat(0.001, 4);
+	printf("\n\n");
+
+	printf("rounding with precision 2:  10.00\n");
+	ft_putfloat(9.999, 2);
+	printf("\n\n");
+
+	printf("zero precision:  3\n");
+	ft_putfloat(3.7, 0);
+	printf("\n\n");
+
+	printf("default precision:  1.500000\n");
+	ft_putfloat(1.5, -1);
+	printf("\n\n");
+
+	return (0);
 }
