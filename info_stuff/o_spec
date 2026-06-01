@@ -1,2 +1,13 @@
 else if (spec == 'o')
     return (ft_putnbr_base(va_arg(args, unsigned int), "01234567"));
+
+int	ft_putoct(unsigned int n)
+{
+	int	count;
+
+	count = 0;
+	if (n >= 8)
+		count += ft_putoct(n / 8);
+	count += ft_putchar("01234567"[n % 8]);
+	return (count);
+}
