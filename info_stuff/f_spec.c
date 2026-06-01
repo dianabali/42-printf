@@ -3,6 +3,8 @@
 
 /*
 	Returns 10 raised to the power exp.
+	Used to easily print the fractional part of the number 
+	because with ft_putnbr you can only print whole numbers.
 
 	Examples:
 	ft_pow10(0) = 1
@@ -32,9 +34,25 @@ int	ft_putfloat(double n, int precision)
 {
 	int		count; // Counts printed characters
 	long	integer; // Integer part of n (3 in 3.14)
-	long	decimal; // Decimal digits after scaling
+	long	decimal; // Decimal digits after converting (in 0.14, the decimal is 14).
 	double	frac; // Fractional part of n (0.14 in 3.14)
-	int		digits; // Used for leading-zero padding
+	int		digits; // Used for leading-zero in the decimal part (ft_putnbr skips leading zeros)
+
+	/*
+		0.001 at precision 4 = 0010
+		Without leading zero: 0.10 (wrong)
+		With leading zero: 0.0010 (correct)
+
+		'digits' counts down from 'precision', 
+		and as long as decimal is smaller than ft_pow10(digits), 
+		there's a leading zero to print:
+			decimal = 10, precision = 4
+			digits = 3 -> ft_pow10(3) = 1000 -> 10 < 1000 -> yes, print '0'
+			digits = 2 -> ft_pow10(2) = 100 -> 10 < 100 -> yes, print '0'
+			digits = 1 -> ft_pow10(1) = 10 -> 10 < 10 -> no, stop
+			then print 10 -> "0010" (correct)
+	*/
+	
 	long	temp; // Temporary copy of decimal
 
 	count = 0;
@@ -61,10 +79,9 @@ int	ft_putfloat(double n, int precision)
 	}
 
 	/*
-		Extract the integer part.
+		Casting to long removes everything after the decimal point.
 			Example:
 			3.14159 -> 3
-			Casting to long removes everything after the decimal point.
 	*/
 	integer = (long)n;
 
@@ -106,11 +123,20 @@ int	ft_putfloat(double n, int precision)
 	/*
 		Handle rounding overflow.
 			Example:
-			9.999 with precision 2 decimal becomes 100
+			9.999 with precision 2 decimal becomes 100.
+
+			frac    = 0.999
+			decimal = (long)(0.999 * 100 + 0.5)
+			        = (long)(99.9 + 0.5)
+			        = (long)(100.4)
+			        = 100
+
 			But valid decimal range for precision 2 is 00-99.
+			This would print 9.100 instead of 10.00.
+			
 			So:
-				integer becomes 10
-				decimal becomes 0
+				integer becomes 10 (integer++)
+				decimal becomes 0 (decimal -= ft_pow10(precision) -> 100 - 100 = 0)
 			Result: 10.00
 	*/
 	if (decimal >= ft_pow10(precision))
@@ -119,7 +145,7 @@ int	ft_putfloat(double n, int precision)
 		decimal -= ft_pow10(precision);
 	}
 
-	// Print integer portion
+	// Print integer part (before the '.')
 	count += ft_putnbr(integer);
 
 	// Print decimal point and decimal digits.
@@ -149,8 +175,6 @@ int	ft_putfloat(double n, int precision)
 		*/
 		count += ft_putnbr(decimal);
 	}
-
-	// Return total characters printed.
 	return (count);
 }
 
