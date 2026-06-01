@@ -1,0 +1,2 @@
+else if (spec == 'o')
+    return (ft_putnbr_base(va_arg(args, unsigned int), "01234567"));
