@@ -160,7 +160,7 @@ My Makefile: [Makefile](Makefile)
 
 `ft_printf()` must return the total number of character printed (the behaviour of the real `printf()`. Since it uses helper functions to print, each helper must tell how many characters it printed. `ft_printf()` accumulates all these return values into count and returns it at the end.
 
-**2. Why the `format[i + 1]` safety check?**
+**2. Why the `format[i + 1]` safety check in `ft_printf()`?**
 
 When a '%' is found, the code checks `format[i + 1]` before advancing. If '%' is the last character in the string, format[i + 1] is '\0' (false), so the code skips it safely. Without this check, advancing past i and passing '\0' to `ft_handle_conversion()` would be undefined behaviour.
 
