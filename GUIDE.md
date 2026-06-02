@@ -90,17 +90,96 @@ int	main(void)
 | `%%` | Percent | Prints a percent sign |
 
 ## Project Structure
-1. Makefile - to create `libftprintf.a`.
-2. ft_printf.h - the header file.
-3. ft_printf.c - main function + `ft_handle_conversion()`.
-4. ft_putchar.c - %c handler.
-5. ft_putstr.c - %s handler.
-6. ft_putnbr.c - %d and %i handler.
-7. ft_putunsigned.c - %u handler.
-8. ft_puthexa.c - %X and %x handler.
-9. ft_putptr.c - %p handler.
+1. `Makefile` - to create `libftprintf.a`.
+2. `ft_printf.h` - the header file.
+3. `ft_printf.c` - main function + `ft_handle_conversion()`.
+4. `ft_putchar.c` - %c handler.
+5. `ft_putstr.c` - %s handler.
+6. `ft_putnbr.c` - %d and %i handler.
+7. `ft_putunsigned.c` - %u handler.
+8. `ft_puthexa.c` - %X and %x handler.
+9. `ft_putptr.c` - %p handler.
 
 ## Step-by-step Implementation Guide
+### Step 1: `ft_printf.h`
+The header file must be named `ft_printf.h` and must include the prototype of `ft_printf()` and all helper function prototypes.
+
+My header file: [ft_printf.h](ft_printf.h)
+
+### Step 2: `ft_putchar.c`
+The simpliest helper function. Uses `write()` to output one character and returns 1 (one character printed).
+
+My ft_putchar: [ft_putchar.c](ft_putchar.c)
+
+### Step 3: `ft_putstr.c`
+Loops through a string and prints each character. Returns the total length so `ft_printf()` knows how many characters were written. Handles NULL string by printing "(null)".
+
+My ft_putstr: [ft_putstr.c](ft_putstr.c)
+
+### Step 4: `ft_putnbr.c`
+Handles signed integers. Casts to long first to safely handle INT_MIN without overflow. User recursion to print digits in the correct order.
+
+My ft_putnbr: [ft_putnbr.c](ft_putnbr.c)
+
+### Step 5: `ft_putunsigned.c`
+Same recursive approach as `ft_putnbr` but no sign handling since the value is always positive.
+
+My ft_putunsigned: [ft_putunsigned.c](ft_putunsigned.c)
+
+### Step 6: `ft_puthexa.c`
+Handles both %x (lowercase) and %X (uppercase) using the uppercase flag to choose the base string. Uses the same recursive approach.
+
+My ft_puthexa: [ft_puthexa.c](ft_puthexa.c)
+
+### Step 7: `ft_putptr.c`
+Prints a pointer address. Always prefixes with "0x" and uses lowercase hexadecimal. If you pass a NULL pointer, it is going to print "(nil)".
+
+My ft_putptr: [ft_putptr.c](ft_putptr.c)
+
+### Step 8: `ft_printf.c`
+This is the main function. Iterates through the format string character by character. When it encounters '%', it checks that the next element exists, then calls `ft_handle_conversion()` with the specifier and the `va_list`. Plain characters are printed directly with `ft_putchar()`.
+
+My ft_printf: [ft_printf.c](ft_printf.c)
+
+### Step 9: `Makefile`
+The Makefile compiles all .c files into .o object files, then archives them into `libftprintf.a` using `ar rcs`.
+
+My Makefile: [Makefile](Makefile)
+
+| Rule / Syntax | Description |
+|--------------|-------------|
+| `ar rcs` | Creates a static library. `r=insert`, `c=create`, `s=add index` |
+| `$(SRCS:.c=.o)` | Pattern substitution: replaces `.c` with `.o` for all source files |
+| `-Wall -Wextra -Werror` | All compiling flags |
+| `$<` | Automatic variable: the first prerequisite (the `.c` file) |
+| `${<:.c=.o}` | Automatic variable: the target (the `.o` file). Replace .c with .o |
+| `.PHONY` | Tells `make` these are not real files, always run them |
+
+## Key concepts to understand
+**1. Why do all helper functions return `int`?**
+
+`ft_printf()` must return the total number of character printed (the behaviour of the real `printf()`. Since it uses helper functions to print, each helper must tell how many characters it printed. `ft_printf()` accumulates all these return values into count and returns it at the end.
+
+**2. Why the `format[i + 1]` safety check?**
+
+When a '%' is found, the code checks `format[i + 1]` before advancing. If '%' is the last character in the string, format[i + 1] is '\0' (false), so the code skips it safely. Without this check, advancing past i and passing '\0' to `ft_handle_conversion()` would be undefined behaviour.
+
+**3. What is the difference between %d and %i?**
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
