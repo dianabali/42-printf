@@ -9,8 +9,8 @@ ft_printf is a 42 project that requires you to recode the `printf()` function fr
 | Library name | libftprintf.a |
 | Header file | ft_printf.h |
 | Makefile rules | all, clean, fclean, re |
-| External functs. | malloc, free, write, va_start, va_arg, va_copy, va_end |
-| Archive command | ar rcs (libtool is forbidden) |
+| External functs. | write, va_start, va_arg, va_end |
+| Archive command | ar rcs |
 
 ## What is `printf()`
 `printf()` is a standard C function declared in `<stdio.h>`. It reads a format string and prints characters to stdout, substituting conversion specifiers (%c, %s, ...) with the corresponding arguments.
