@@ -24,9 +24,9 @@ int printf(const char *format, ...);
 
 Example:
 ```
-int n = printf("%s scored %d% in ft_printf", "Oscar", 100);
+printf("%d\n", printf("%s scored %d% in ft_printf", "Oscar", 100));
 // Output: Oscar scored 100% in ft_printf
-// n = 30 (total characters printed)
+// 30 - total characters printed.
 ```
 
 ## Variadic Functions
