@@ -25,6 +25,7 @@ int printf(const char *format, ...);
 Example:
 ```
 printf("%d\n", printf("%s scored %d in ft_printf\n", "Oscar", 100));
+
 // Output:
 // Oscar scored 100 in ft_printf
 // 30 (total characters printed)
@@ -168,19 +169,64 @@ When a '%' is found, the code checks `format[i + 1]` before advancing. If '%' is
 **3. What is the difference between %d and %i?**
 
 
+**4. What happens if the format string is NULL?**
 
+If `format` is NULL, there is nothing to iterate over. Attempting to dereference a NULL pointer would cause a segmentation fault. If the format string is NULL, the function should return -1. In this way, you prevent a crash and signal an error via the return value.
 
+**5. Why does '%%' not use a va_arg?**
 
+va_arg retrieves the next argument from the list. '%%' is not a conversion. It has no corresponding argument passed. It simply means print a literal %. 
 
+**6. Why do we use unsigned long for the pointer address `ft_putptr()` and not int?**
 
+On a 64-bit system, a memory address is 64 bits. `int` is only 32 bits, so it cannot hold a full pointer address. Unsigned is used because addresses are never negative.
 
+**7. What would happen if you passed a float to `ft_printf()` with '%f' (not supported)?**
 
+First, float values are automatically promoted to double when passed as variadic arguments, so va_arg(args, float) would actually be wrong. You would need va_arg(args, double). Second, since '%f' is not supported in `ft_printf()`, `ft_handle_conversion()` would hit the final return (0). The float would just be ignored.
+```
+ft_printf("Value: %f\n", 3.14);
 
+// ft_handle_conversion() receiver 'f', matches nothing, returns 0.
+// Output: Value:
+```
+```
+ft_printf("%f %d", 3.14, 42);
 
+// The 3.14 is passed as a double (8 bytes) and sits in the va_list.
+// Since %f never calls va_arg, the double is not used.
+// Then %d calls va_arg(args, int) but it reads from where 3.14 is sitting in memory, not where 42 is.
+// So instead of 42 you get garbage. 42 is never reached at all.
+```
 
+**8. What does `ar rcs` do exactly?**
 
+`ar` is the archive tool used to create static libraries.
 
+- r - insert object files into the archive.
+- c - create the archive file if it doesn't exist.
+- s - write a symbol into the archive so the linker can find functions quickly.
 
+The symbol looks like this:
+```
+ft_printf -> ft_printf.o
+```
 
+So when you compile `ft_printf.c`, the linker sees that it uses `ft_putchar.c`. Instead of opening every .o file one by one to search for it, it looks up `ft_putchar` directly in the symbol table and immediately knows it is in `ft_putchar.o`. It then only pulls that file in.
 
+Without 's', the linker would have to scan through every .o file inside the archive sequentially until it found the right one, which is slow for large libraries with hundreds of functions.
 
+**9. What happens if you call va_arg more times than there are arguments?**
+It is undefined behavior. va_arg reads the next value from the stack regardless of whether a real argument was passed there. You get whatever happens to be in memory at that position (garbage values, values from other variables, or a crash).
+```
+ft_printf("%d %d %d", 42);
+
+// Only one argument passed but three %d specifiers:
+// first  va_arg → 42 (correct)
+// second va_arg → garbage (reads random stack memory)
+// third  va_arg → garbage (reads more random stack memory)
+// output could be: 42 -285436856 1458081216 (unpredictable)
+```
+
+**10. Why must va_end always be called?**
+If you skip it, you may cause memory leaks or stack corruption depending on the system. Even on systems where it compiles and runs fine without it, omitting va_end is undefined behavior according to the C standard so it must always be called before the function returns.
