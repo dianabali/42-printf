@@ -7,6 +7,7 @@ A step-by-step guide to reimplementing `printf()` in C.
 - [What is `printf()`](#what-is-printf)
 - [Variadic Functions](#variadic-functions)
 - [Format Specifiers](#format-specifiers)
+- [Flags in `printf()`](#flags-in-printf)
 - [Project Structure](#project-structure)
 - [Step-by-step Implementation Guide](#step-by-step-implementation-guide)
 - [Key Concepts to Understand](#key-concepts-to-understand)
