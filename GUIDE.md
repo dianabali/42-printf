@@ -6,7 +6,7 @@ A step-by-step guide to reimplementing `printf()` in C.
 - [Project Overview](#project-overview)
 - [What is `printf()`](#what-is-printf)
 - [Variadic Functions](#variadic-functions)
-- [Conversion Specifiers](#conversion-specifiers)
+- [Format Specifiers](#format-specifiers)
 - [Project Structure](#project-structure)
 - [Step-by-step Implementation Guide](#step-by-step-implementation-guide)
 - [Key Concepts to Understand](#key-concepts-to-understand)
@@ -88,7 +88,7 @@ int	main(void)
 }
 ```
 
-## Conversion Specifiers
+## Format Specifiers
 | Specifier | Name | Description |
 |:-----------|:------|:-------------|
 | `%c` | Character | Prints a single character |
@@ -100,6 +100,52 @@ int	main(void)
 | `%x` | Hex lower | Prints an unsigned integer in hexadecimal lowercase |
 | `%X` | Hex upper | Prints an unsigned integer in hexadecimal uppercase |
 | `%%` | Percent | Prints a percent sign |
+
+## Flags in `printf()`
+Flags are optional modifiers you place between the '%' and the format specifier to control how the output is formatted. The full syntax of a conversion is:
+```
+% [flags] [width] [.precision] specifier
+```
+1. `-` - left_align output. Without it, the output is right-aligned by default.
+```
+printf("%-10d|", 42);    // "42        |"
+printf("%10d|",  42);    // "        42|"
+```
+2. `0` - pad with zeros instead of spaces.
+```
+printf("%010d", 42);    // "0000000042"
+```
+3. `#` - adds a prefix to alternate form. For %x and %X it adds 0x or 0X. For %o it adds a leading 0.
+```
+printf("%#x", 255);     // "0xff"
+printf("%#X", 255);     // "0XFF"
+```
+4. `+` - forces a sign to be printed for positive numbers too.
+```
+printf("%+d", 42);      // "+42"
+printf("%+d", -42);     // "-42"
+```
+5. `(space)` - prints a space before positive numbers.
+```
+printf("% d", 42);      // " 42"
+printf("% d", -42);     // "-42"
+```
+6. Field width - sets the minimum number of characters to print. If the output is shorter, it is padded with spaces (or zeros if 0 flag is set). If the output is longer, it is never truncated.
+```
+printf("%10d", 42);     // "        42" (8 spaces + 42)
+printf("%2d",  12345);  // "12345" (no truncation)
+```
+7. Precision - a . followed by a number after the width sets the precision. Its meaning depends on the specifier:
+- For %d, %i, %u, %x, %X — minimum number of digits to print, padded with leading zeros.
+- For %s — maximum number of characters to print from the string.
+- For %f — number of decimal places (default is 6).
+```
+printf("%.5d", 42); // "00042" (padded to 5 digits)
+printf("%.5s", "Hello World"); // "Hello" (truncated to 5 chars)
+printf("%.2f", 1.23456); // "1.23"
+```
+Example:
+[flags_ex.c](./info_stuff/flags_ex.c)
 
 ## Project Structure
 1. `Makefile` - to create `libftprintf.a`.
