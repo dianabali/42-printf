@@ -2,17 +2,14 @@
 A step-by-step guide to reimplementing `printf()` in C.
 
 ### Contents
-[Project overview](#projectoverview)
 
-[What is printf()](#whatisprintf())
-
-[Variadic functions](#variadicfunctions)
-
-[Conversion specifiers](#conversionspecifiers)
-
-[Step-by-step implementation guide](#stepbystepimplementationguide)
-
-[Key concepts to understand](#keyconceptstounderstand)
+- [Project Overview](#project-overview)
+- [What is `printf()`](#what-is-printf)
+- [Variadic Functions](#variadic-functions)
+- [Conversion Specifiers](#conversion-specifiers)
+- [Project Structure](#project-structure)
+- [Step-by-step Implementation Guide](#step-by-step-implementation-guide)
+- [Key Concepts to Understand](#key-concepts-to-understand)
 
 ## Project Overview
 ft_printf is a 42 project that requires you to recode the `printf()` function from the C standard library. The goal is to produce a static library called `libftprintf.a` that contains `ft_printf()` matching the behaviour of the original.
