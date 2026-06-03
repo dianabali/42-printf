@@ -1,6 +1,9 @@
 # ft_printf
 A step-by-step guide to reimplementing `printf()` in C.
 
+### Contents
+- [Project overview](#projectoverview)
+
 ## Project Overview
 ft_printf is a 42 project that requires you to recode the `printf()` function from the C standard library. The goal is to produce a static library called `libftprintf.a` that contains `ft_printf()` matching the behaviour of the original.
 
@@ -168,6 +171,52 @@ When a '%' is found, the code checks `format[i + 1]` before advancing. If '%' is
 
 **3. What is the difference between %d and %i?**
 
+Both %d and %i do the same thing in printf. They both print a signed decimal integer.
+```
+#include <stdio.h>
+
+int main(void)
+{
+    printf("d = %d\n", 42);
+    printf("i = %i\n", 42);
+    return 0;
+}
+
+// Output:
+// d = 42
+// i = 42
+```
+
+The difference shows up in `scanf`: %d expects a base-10 (decimal) integer, whereas %i auto-detects the base. Prefixing the input with 0x (e.g., 0xA) is read as hex, 0 (e.g., 010) is read as octal, otherwise decimal.
+```
+#include <stdio.h>
+
+int main(void)
+{
+    int a;
+    int b;
+    int c;
+
+    printf("decimal:");
+    scanf("%d", &a);
+
+    printf("octal: ");
+    scanf("%i", &b);
+
+    printf("hexadecimal: ");
+    scanf("%i", &c);
+
+    printf("a = %d, b = %i, c = %i", a, b, c);
+
+    return 0;
+}
+
+// Output:
+// decimal: 10
+// octal: 010
+// hexadecimal: 0xA
+// a = 10, b = 8, c = 10
+```
 
 **4. What happens if the format string is NULL?**
 
@@ -217,6 +266,7 @@ So when you compile `ft_printf.c`, the linker sees that it uses `ft_putchar.c`. 
 Without 's', the linker would have to scan through every .o file inside the archive sequentially until it found the right one, which is slow for large libraries with hundreds of functions.
 
 **9. What happens if you call va_arg more times than there are arguments?**
+
 It is undefined behavior. va_arg reads the next value from the stack regardless of whether a real argument was passed there. You get whatever happens to be in memory at that position (garbage values, values from other variables, or a crash).
 ```
 ft_printf("%d %d %d", 42);
@@ -229,4 +279,5 @@ ft_printf("%d %d %d", 42);
 ```
 
 **10. Why must va_end always be called?**
+
 If you skip it, you may cause memory leaks or stack corruption depending on the system. Even on systems where it compiles and runs fine without it, omitting va_end is undefined behavior according to the C standard so it must always be called before the function returns.
