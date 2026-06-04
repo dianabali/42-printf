@@ -69,8 +69,8 @@ int	ft_handle_conversion(char specifier, va_list args)
 	// For the % sign
 	else if (specifier == '%')
 		return (ft_putchar('%'));
-	
-	// If you are passing a specifier that is not handled such as %o or %f
+
+	// For unknown specifiers. The real printf() just prints the specifier as a character
 	else
 		return (ft_putchar('%'), ft_putchar(specifier));
 	return (0); // For unknown specifiers
