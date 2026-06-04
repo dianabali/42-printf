@@ -69,6 +69,10 @@ int	ft_handle_conversion(char specifier, va_list args)
 	// For the % sign
 	else if (specifier == '%')
 		return (ft_putchar('%'));
+	
+	// If you are passing a specifier that is not handled such as %o or %f
+	else
+		return (ft_putchar('%'), ft_putchar(specifier));
 	return (0); // For unknown specifiers
 }
 
@@ -123,6 +127,7 @@ int	main(void)
 
 	printf("MY FUNC:\n");
 
+	ft_printf("this specifier is not handled: %y\n");
 	ft_printf("char:          %c\n", 'A');
 	ft_printf("string:        %s\n", str);
 	ft_printf("null string:   %s\n", s);
@@ -141,6 +146,7 @@ int	main(void)
 
 	printf("\nREAL FUNC:\n");
 
+	printf("this specifier is not handled: %y\n");
 	printf("char:          %c\n", 'A');
 	printf("string:        %s\n", str);
 	printf("null string:   %s\n", s);
